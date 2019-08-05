@@ -1,0 +1,72 @@
+<% include partials/header %>
+
+	<main>
+		<article>
+			<% if (errorsArray) { %>
+				<ul class="errors-ul">
+					<h3>Whoops!</h3>
+					<% errorsArray.forEach((error) => { %>
+						<li><%= error %></li>
+					<% })  %>
+				</ul>
+			<% } %>
+
+
+			<form class="form" method="POST" action="/jokes/add">
+				<div class="form-group">
+					<label>Question:</label><br>
+					<input type="text" name="question" value="<%= (newJoke) ? newJoke.question : '' %>"></input>
+				</div>
+
+
+				<div class="form-group">
+					<label>Answer:</label><br>
+					<input type="text" name="answer" value="<%= (newJoke) ? newJoke.answer : '' %>"></input>
+				</div>
+
+
+				<div class="form-group submit_or_cancel_group">
+					<button type="submit">SUBMIT</button>
+          <button type="reset" class="cancel_button">RESET</button>
+				</div>
+			</form>
+
+
+			<% if (jokesArray) { %>
+				<div class="table-container">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Question:</th>
+								<th>Answer:</th>
+								<th></th>
+							</tr>
+						</thead>
+
+
+						<tbody>
+						<% [...jokesArray].reverse().forEach((joke) => { %>
+							<tr>
+								<td><%= joke.question %></td>
+								<td><%= joke.answer %></td>
+
+								<td>
+									<!-- Change this to a void statement -->
+									<a
+									  href="#nowhere"
+									  class="deleteJoke"
+										data-id="<%= joke._id %>"
+									>DELETE</a>
+								</td>
+							</tr>
+						<% });  %>
+						</tbody>
+					</table>
+				</div>
+
+			<% } %>
+		</article>
+	</main>
+
+
+<% include partials/footer %>
